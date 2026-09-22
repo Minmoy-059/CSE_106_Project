@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+
+int matrix[5000][5000];
+
+
+int main() {
+
+    srand(time(NULL));
+
+    int sizes[5] = {1000, 2000, 3000, 4000, 5000};
+
+  printf("--------------------------------------------------");
+  printf("\n");
+
+  for ( int s = 0; s < 5; s++) {
+        int n = sizes[s];
+
+
+        clock_t start_time = clock();
+
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                matrix[i][j] = rand() % 2;
+            }
+        }
+
+
+        long long int sum_in_degrees = 0;
+        long long int sum_out_degrees = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                sum_out_degrees += matrix[i][j];
+                sum_in_degrees += matrix[j][i];
+            }
+        }
+
+
+        clock_t end_time = clock();
+
+
+        double computational_time = ((double)(end_time - start_time) * 1000.0) / CLOCKS_PER_SEC;
+
+
+        printf("For n = %d:\n", n);
+        printf("Sum of out-degrees: %lld\n", sum_out_degrees);
+        printf("Sum of in-degrees:  %lld\n", sum_in_degrees);
+
+        if (sum_in_degrees == sum_out_degrees) {
+            printf("Sum of in-degrees and out-degrees are equal");
+        } else {
+            printf("Sum of in-degrees and out-degrees are NOT equal");
+        }
+
+        printf("Computational time for n = %d: %.2f ms\n", n, computational_time);
+        printf("--------------------------------------------------\n");
+    }
+
+    return 0;
+}
+
+
